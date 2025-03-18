@@ -89,9 +89,4 @@ All email activities are logged in `email.log`, including errors and successful 
 - Use **App Passwords** instead of your actual email password.
 - Never commit `.env` files to version control.
 
-## 📄 License
-MIT License
-
----
-Made with ❤️ by [Your Name]
 
