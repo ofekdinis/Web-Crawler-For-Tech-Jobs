@@ -54,17 +54,13 @@ Since the script makes multiple network requests, synchronous execution would ma
    ```
 ### email sender ###
 ## ⚙️ Setup
-1. **Create a `.env` file** in the project directory:
+**Create a `.env` file** in the project directory:
    ```ini
    SMTP_SERVER=smtp.gmail.com
    SMTP_PORT=587
    EMAIL_SENDER=your_email@gmail.com
    EMAIL_PASSWORD=your_app_password
    ```
-
-2. **Prepare your email template files:**
-   - `email_template.html`: Your HTML content
-   - `styles.css`: Your CSS styles
 
 ## 🛠 Usage
 ```python
@@ -83,7 +79,7 @@ email_sender.send_email(
 ```
 
 ## 📜 Logging
-All email activities are logged in `email.log`, including errors and successful sends.
+All email activities are logged in `email.log`,and  `webcrawler.log` including errors and successful sends.
 
 ## ⚠️ Security Note
 - Use **App Passwords** instead of your actual email password.
