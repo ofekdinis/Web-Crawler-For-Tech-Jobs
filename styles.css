@@ -1,0 +1,90 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #2c3e50; /* Darker background */
+    color: #ecf0f1; /* Light gray text for readability */
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1, h2, h3, p {
+    margin: 10px 20px;
+}
+
+h1 {
+    color: #4a90e2; /* Soft blue for the title */
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+h2 {
+    color: #95a5a6; /* Muted light gray for the keywords */
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+a {
+    color: #4a90e2; /* Soft blue links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+div {
+    background-color: #34495e; /* Dark card background */
+    border-radius: 12px; /* Rounded corners */
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    width: 80%;
+    max-width: 800px;
+}
+
+h3 {
+    color: #f39c12; /* Golden color for job ID */
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+p {
+    color: #ecf0f1; /* Light text color for description */
+    font-size: 1rem;
+    text-align: justify;
+}
+
+p a {
+    color: #2ecc71; /* Soft green for links inside paragraphs */
+}
+
+/* Right-to-left direction (for Hebrew content) */
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Footer styles */
+footer {
+    background-color: #34495e; /* Same dark background as the divs */
+    color: #bdc3c7; /* Lighter gray text */
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: 30px;
+    border-top: 1px solid #7f8c8d;
+    font-size: 0.9em;
+}
