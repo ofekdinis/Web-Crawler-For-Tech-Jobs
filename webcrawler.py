@@ -105,21 +105,36 @@ class HTMLJobExtractor:
                                         job description, date, and area.
         """
         jobs = {}
-        for job_div in soup.find_all("div", id=lambda x: x and x.startswith("job_")):
-            job_id = job_div.get("id", "").replace("job_", "")
-            job_text = job_div.get_text(separator=" ", strip=True)
+        for job_div_inner in soup.find_all("div", class_="page-details job-candidate-list node node-jobs node-teaser view-mode-teaser"):
+                #print(job_div_inner.get_text(strip=True)) 
+                job_id = self.extract_text_or_default(job_div_inner, "div","field field-name-field-job-id field-type-serial field-label-inline clearfix")
+                job_text = self.extract_text_or_default(job_div_inner, "div","row1 clearfix page-details-content content")
+                # Extract date and area using the helper function
             
-            # Assuming the date and area are in specific elements or classes:
-            date = job_div.find("span", class_="date").text.strip() if job_div.find("span", class_="date") else "N/A"
-            area = job_div.find("span", class_="area").text.strip() if job_div.find("span", class_="area") else "N/A"
-
-            jobs[job_id] = {
-                "description": job_text,
-                "date": date,
-                "area": area
-            }
+                date = self.extract_text_or_default(job_div_inner, "span", "date-display-single")
+                area = self.extract_text_or_default(job_div_inner, "span", "lineage-item lineage-item-level-0")
+                jobs[job_id] = {
+                    "description": job_text,
+                    "date": date,
+                    "area": area
+                }
         return jobs
 
+    def extract_text_or_default(self,job_div, tag, class_name, default="N/A"):
+        """
+        Helper function to extract text from a tag within job_div, or return a default value.
+        
+        Args:
+            job_div: The parent HTML element containing the job information.
+            tag: The HTML tag to search for (e.g., "span").
+            class_name: The class name to find within the tag.
+            default: The default value to return if the element is not found.
+        
+        Returns:
+            The text from the tag, or the default value if the tag is not found.
+        """
+        element = job_div.find(tag, class_=class_name)
+        return element.text.strip() if element else default
     async def check_keywords_in_page(self, url: str, keywords: List[str]) -> Dict[str, Dict[str, str]]:
         """
         Checks if a webpage contains any of the given keywords and extracts job IDs, descriptions, dates, and areas.
@@ -204,7 +219,9 @@ async def main():
     base_urls = ["https://www.mcmc.org.il/he/jobs", "https://taasuka.galil-elion.org.il/he/jobs", "https://www.mwg.org.il/he/jobs", "https://www.mmk.org.il/he/jobs"]
     extractor = HTMLJobExtractor(logger=logging.getLogger(log_file), file_name="jobs_output.html")
     test_urls = extractor.generate_paged_urls(base_urls)
-    search_keywords = ["c#", ".net", "python", "developer","Pyton", "phyton", "פייתון", "תוכנה", "פיתון","Python","C#"]
+    #search_keywords = ["c#", ".net", "python", "developer","Pyton", "phyton", "פייתון", "תוכנה", "פיתון","Python","C#"]
+    search_keywords = ["c#","PAYTHON", ".net", "python", "developer","Pyton", "phyton", "פייתון", "פיתון","Python","C#"]
+
     extractor.save_styles_to_html()
     await extractor.check_multiple_urls(test_urls, search_keywords)
 
@@ -231,4 +248,4 @@ if __name__ == "__main__":
         html_file="jobs_output.html",
         css_file="styles.css"
     )
-    print('email sent!')
+    print('email sent!')   
