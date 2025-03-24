@@ -58,9 +58,10 @@ class HTMLJobExtractor:
                 highlighted_description = self.highlight_keywords(job_data['description'], keywords)
                 html_content += f"""
                 <div style="direction: {direction}; margin-bottom: 20px;">
-                    <h3>Job ID: {job_id}</h3>
-                    <p><strong>Area:</strong> {job_data['area']}</p>
-                    <p><strong>Date:</strong> {job_data['date']}</p>
+                    <h3><strong>{job_data['title']}</strong></h3>
+                    <h4>{job_id}</h4>
+                    <h4><strong>מיקום :{job_data['area']}</strong></h4>
+                    <h4><strong>תאריך :{job_data['date']}</strong></h4>
                     <p>{highlighted_description}</p>
                 </div>
                 """
@@ -109,14 +110,16 @@ class HTMLJobExtractor:
                 #print(job_div_inner.get_text(strip=True)) 
                 job_id = self.extract_text_or_default(job_div_inner, "div","field field-name-field-job-id field-type-serial field-label-inline clearfix")
                 job_text = self.extract_text_or_default(job_div_inner, "div","row1 clearfix page-details-content content")
+                job_title_element = job_div_inner.find("div", class_="collapse-job page-details-job clearfix")
+                job_title=job_title_element.find("h3").text.strip()
                 # Extract date and area using the helper function
-            
                 date = self.extract_text_or_default(job_div_inner, "span", "date-display-single")
                 area = self.extract_text_or_default(job_div_inner, "span", "lineage-item lineage-item-level-0")
                 jobs[job_id] = {
                     "description": job_text,
                     "date": date,
-                    "area": area
+                    "area": area,
+                    "title": job_title or "N/A"
                 }
         return jobs
 
@@ -220,7 +223,7 @@ async def main():
     extractor = HTMLJobExtractor(logger=logging.getLogger(log_file), file_name="jobs_output.html")
     test_urls = extractor.generate_paged_urls(base_urls)
     #search_keywords = ["c#", ".net", "python", "developer","Pyton", "phyton", "פייתון", "תוכנה", "פיתון","Python","C#"]
-    search_keywords = ["c#","PAYTHON", ".net", "python", "developer","Pyton", "phyton", "פייתון", "פיתון","Python","C#"]
+    search_keywords = ["תוכנה","c#","PAYTHON", ".net", "python", "developer","Pyton", "phyton", "פייתון", "פיתון","Python","C#"]
 
     extractor.save_styles_to_html()
     await extractor.check_multiple_urls(test_urls, search_keywords)
