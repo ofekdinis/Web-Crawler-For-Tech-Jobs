@@ -1,0 +1,8 @@
+services:
+  app:
+    build: .
+    container_name: webcrawler_app
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/var/log  # Persist logs outside the container
