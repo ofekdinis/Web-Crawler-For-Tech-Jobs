@@ -208,7 +208,7 @@ async def main():
     if os.path.exists("jobs_output.html"):
         os.remove("jobs_output.html")
 
-    log_file = "webcrawler.log"
+    log_file = "/var/log/webcrawler.log"
     # Delete the log file if it exists before setting up the logger
     if os.path.exists(log_file):
         os.remove(log_file)
