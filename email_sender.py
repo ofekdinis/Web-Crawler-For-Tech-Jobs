@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 
 class EmailSender:
-    def __init__(self, log_file: str = "email.log"):
+    def __init__(self, log_file: str = "/var/log/email.log"):
         """
         Initialize the EmailSender by loading SMTP details from the .env file.
         """
