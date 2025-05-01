@@ -1,3 +1,4 @@
+from pathlib import Path
 import traceback
 import aiohttp
 import asyncio
@@ -207,11 +208,14 @@ async def main():
     # Delete the html file if it exists 
     if os.path.exists("jobs_output.html"):
         os.remove("jobs_output.html")
+    basedir = os.path.dirname(os.path.abspath(__file__))
 
-    log_file = "/var/log/webcrawler.log"
+    log_file  = os.path.join(basedir, "logs/webcrawler.log")
+
     # Delete the log file if it exists before setting up the logger
     if os.path.exists(log_file):
         os.remove(log_file)
+
     # Configure logging
     logging.basicConfig(
         filename=log_file,  # Log file name
