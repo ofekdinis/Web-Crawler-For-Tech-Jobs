@@ -151,7 +151,10 @@ class HTMLJobExtractor:
             Dict[str, Dict[str, str]]: Dictionary of job IDs, descriptions, dates, and areas where keywords were found.
         """
         try:
-            async with aiohttp.ClientSession() as session:
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+            }
+            async with aiohttp.ClientSession(headers=headers) as session:
                 async with session.get(url, timeout=10) as response:
                     response.raise_for_status()  # This will raise an error for non-2xx status codes
                     # Await response text to get HTML content
